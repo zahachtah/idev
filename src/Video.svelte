@@ -1,13 +1,16 @@
 <script>
-export let opt
-export let node
-export let width
+		export let nodes
+		export let id
+		export let opt
+		export let width
+		export let depth
+		export let view
 $: opt
 $: width
 </script>
 
 <div class="container">
-<iframe class="video" title="title" src={node.content.src} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe class="video" title="title" src={nodes[id].content.src} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 <style>

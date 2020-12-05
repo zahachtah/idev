@@ -1,14 +1,17 @@
 <script>
 export let opt
-export let node
+export let nodes
 export let width
+export let depth
+export let id
+export let view
 $: width
 </script>
 
-
-<img src={node.content.src} alt=""/>
-    <span contenteditable={opt.edit} style="color:salmon"><i>{node.content.caption}</i></span>
-
+{#if !view=="Header"}
+<img src={nodes[id].content.src} alt=""/>
+    <span contenteditable={opt.edit} style="color:salmon"><i>{nodes[id].content.caption}</i></span>
+{/if}
 <style>
 img {
 width:100%

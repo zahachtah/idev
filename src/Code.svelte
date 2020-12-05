@@ -6,16 +6,17 @@
 <script>
 
     import Prism from 'svelte-prism'
-		export let node
+		export let nodes
+		export let id
 		export let opt
 		export let width
-		$: opt
-		$: width
+		export let depth
+		export let view
 </script>
 <div contentedit=true>
 	
 
 <Prism language="html" >
-	{node.content.text}
+	{nodes[id].content.text}
 </Prism>
 </div>
