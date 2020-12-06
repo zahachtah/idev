@@ -5,12 +5,42 @@
   export let id
   export let depth
   export let view
-	
-	width=2
-	$: opt
+
+  async function post(id) {
+    try {
+      const options={
+        method: 'put',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "authorization": 'Basic ' + btoa(opt.user + ':' + opt.pwd)
+        },
+        body: JSON.stringify(nodes[id])
+      }
+      const response=await fetch(opt.url+id, options)
+      const data= await response.json()
+      nodes[id]._rev=data.rev
+      console.log(options)
+      console.log(data)
+    }
+    catch (err) {console.log(err)}
+}
+  
+  let timer;
+
+	function debounce() {
+    console.log('start debounce');
+		clearTimeout(timer);
+		timer = setTimeout(() => {post(id);}, 1500);
+  }
+  
 </script>
 
-<span >{@html nodes[id].content.text}</span>
+{#if opt.edit}
+  <span on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.text}></span>
+{:else}
+  <span on:keyup={()=>debounce()} contenteditable=false  bind:innerHTML={nodes[id].content.text}></span>  
+{/if}
 <!--
   {#if view.mode=='structure'}
     <span contenteditable={view.edit} style="color:salmon">{@html node.content.text.substring(0, 40)}</span>

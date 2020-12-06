@@ -14,6 +14,7 @@
 	import Svega from './Svega.svelte'
 	import Data from './Data.svelte'
 	import CouchDB from './CouchDB.svelte'
+import { check_outros } from 'svelte/internal';
 	export let nodes
 	export let opt
 	export let id
@@ -45,22 +46,30 @@
 	
 	function handleDndFinalize(e) {
 		
-		nodes[id].links = e.detail.items
+		nodes[id].links = e.detail.items;
+		post(id)
+		console.log('update node with links')
 	}
 	
 	
-	async function getID(id){
-		if (!nodes[id]){
-		await fetch(opt.url+id)
-			.then(res => res.json())
-			.then(data => {
-				nodes[id]= data;
-			console.log(id)
-			}).catch(function(error) {
-			console.log(error);
-					
-		});
+async function post(id) {
+	try {
+		const options={
+			method: 'put',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"authorization": 'Basic ' + btoa(opt.user + ':' + opt.pwd)
+			},
+			body: JSON.stringify(nodes[id])
+		}
+		const response=await fetch(opt.url+id, options)
+		const data= await response.json()
+		nodes[id]._rev=data.rev
+		console.log(options)
+		console.log(data)
 	}
+	catch (err) {console.log(err)}
 }
 
 async function get(id){
@@ -109,8 +118,9 @@ async function get(id){
 		return err
 	}	
 }
-// nodes[id].links.filter(x=>{!exempt.includes(x.view)})
-//getID(id)	
+
+function addRemove(event,id){console.log(event.offsetY/event.currentTarget.getBoundingClientRect().height);}
+
 </script>
 {#await get(id)}
 	loading {id}
@@ -120,12 +130,12 @@ async function get(id){
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view}/>
 
 	{#if nodes[id].links}
-		<section use:dndzone={{items:nodes[id].links, flipDurationMs}}
+		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
 					on:finalize={handleDndFinalize}>
 			{#if depth<=opt.depth}
 				{#each nodes[id].links as link (link.id)}
-						<div animate:flip="{{duration: flipDurationMs}}" class="item">
+						<div animate:flip="{{duration: flipDurationMs}}" class="item" on:click={(event)=>addRemove(event,link.id)}>
 							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1} view={link.view}/>
 						</div>
 				{/each}

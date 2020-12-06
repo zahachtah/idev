@@ -3,7 +3,14 @@
 	import { dndzone } from 'svelte-dnd-action';
 	import Svg from './Svg.svelte'
 	let nodes={}
-	let opt={'depth':1, 'base':'root',url:'https://9231c9c3-121c-4b8e-bbfd-ac275ec62eb9-bluemix.cloudantnosqldb.appdomain.cloud/test/','edit':false, 'history':[], 'drag':false}
+	let opt={'depth':1,
+			 'base':'root',
+			 url:'https://9231c9c3-121c-4b8e-bbfd-ac275ec62eb9-bluemix.cloudantnosqldb.appdomain.cloud/test/',
+			 'edit':false, 
+			 'history':[], 
+			 'dragDisabled':true,
+			 'user':"apikey-81f76e82d4154627812593832eb9c4cb",
+			 'pwd':"8918d591770b9449c2012979b0f9101b5416e1c6"}
 	let key=false
 	
 	function _handleKeydown(event) {
@@ -45,6 +52,7 @@
 			}
 	}
 
+	function toggle(x){x=!x}
 	
 	$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
@@ -52,25 +60,24 @@
 <section>
 <Content bind:nodes={nodes} bind:opt={opt} id={opt.base} depth={1}/>
 </section>
-<div class="back" style="width: {menuWidth}" on:mousedown={()=>startTimer()} on:mouseup={()=>check()} on:touchstart={()=>startTimer()} on:touchend={()=>check()}>
+<div class="back" style="width: {menuWidth}" on:mousedown|self={()=>startTimer()} on:mouseup|self={()=>check()} on:touchstart|self={()=>startTimer()} on:touchend|self={()=>check()}>
 {#if menuWidth=="100%"}
 	<span  class="control" ><Svg name="Connection" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Authorization" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Trash" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Cut" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Section" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Code" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Video" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Editor" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Move" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Paragraph" size=30 fill="black"/></span>
+	<span  class="control" on:click={()=>{opt.edit=!opt.edit}}><Svg name="Editor" size=30 fill={(opt.edit)?"olive":"crimson"}/></span>
+	<span  class="control" on:click={()=>{opt.dragDisabled=!opt.dragDisabled}}><Svg name="Move" size=30 fill={(opt.dragDisabled)?"crimson":"olive"}/></span>
 	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
 {/if}
 </div>
-	
-	{#await getID(newNodes)}
-	{:then go}
-
-	
-	
-
+{#await getID(newNodes)}
+{:then go}
 {/await}
 
 
@@ -85,6 +92,8 @@
 		box-sizing: border-box;
 		display:flex;
 		flex-direction: row-reverse;
+		justify-content: center;
+		align-content: center;
 		height: 40px;
 		background-color: rgba(230,230,240,0.8);
 		position: fixed;
@@ -96,6 +105,9 @@
 	}
 	.control {
 		width:40px;
+		height:40px;
+		margin:0px;
+		padding:40;
 		display: inline-block;
 		padding: 5px
 	}
