@@ -54,14 +54,14 @@
 </section>
 <div class="back" style="width: {menuWidth}" on:mousedown={()=>startTimer()} on:mouseup={()=>check()} on:touchstart={()=>startTimer()} on:touchend={()=>check()}>
 {#if menuWidth=="100%"}
+	<span  class="control" ><Svg name="Connection" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Authorization" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Code" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Video" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Editor" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Move" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
 {/if}
 </div>
 	
