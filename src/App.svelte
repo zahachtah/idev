@@ -57,9 +57,11 @@
 	$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
 <svelte:window on:keydown="{_handleKeydown}" on:keyup="{() => key = false}"/>
+
 <section>
 <Content bind:nodes={nodes} bind:opt={opt} id={opt.base} depth={1}/>
 </section>
+
 <div class="back" style="width: {menuWidth}" on:mousedown|self={()=>startTimer()} on:mouseup|self={()=>check()} on:touchstart|self={()=>startTimer()} on:touchend|self={()=>check()}>
 {#if menuWidth=="100%"}
 	<span  class="control" ><Svg name="Connection" size=30 fill="black"/></span>
@@ -87,6 +89,7 @@
 	padding:0;
 
 	}
+
 
 	.back {
 		box-sizing: border-box;
@@ -136,7 +139,9 @@
 		padding-top: 3px
 	}
 	section {
-		width: auto;
+		margin-left: auto;
+		margin-right:auto;
+		width: 100%;
 		max-width: 800px;
 		border: 0px solid black;
 		padding: 0;

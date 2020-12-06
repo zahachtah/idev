@@ -6706,7 +6706,7 @@ var app = (function () {
     		c: function create() {
     			section = element("section");
     			if (if_block) if_block.c();
-    			attr_dev(section, "class", "svelte-wjzvhx");
+    			attr_dev(section, "class", "svelte-1d0natg");
     			add_location(section, file$7, 132, 2, 3231);
     		},
     		m: function mount(target, anchor) {
@@ -6920,7 +6920,7 @@ var app = (function () {
     			div = element("div");
     			create_component(content.$$.fragment);
     			t = space();
-    			attr_dev(div, "class", "item svelte-wjzvhx");
+    			attr_dev(div, "class", "item svelte-1d0natg");
     			add_location(div, file$7, 137, 6, 3489);
     			this.first = div;
     		},
@@ -7444,7 +7444,7 @@ var app = (function () {
     const { console: console_1$3 } = globals;
     const file$8 = "src/App.svelte";
 
-    // (64:0) {#if menuWidth=="100%"}
+    // (66:0) {#if menuWidth=="100%"}
     function create_if_block$5(ctx) {
     	let span0;
     	let svg0;
@@ -7610,30 +7610,30 @@ var app = (function () {
     			t10 = space();
     			span11 = element("span");
     			create_component(svg11.$$.fragment);
-    			attr_dev(span0, "class", "control svelte-1dj3t5i");
-    			add_location(span0, file$8, 64, 1, 1674);
-    			attr_dev(span1, "class", "control svelte-1dj3t5i");
-    			add_location(span1, file$8, 65, 1, 1752);
-    			attr_dev(span2, "class", "control svelte-1dj3t5i");
-    			add_location(span2, file$8, 66, 1, 1833);
-    			attr_dev(span3, "class", "control svelte-1dj3t5i");
-    			add_location(span3, file$8, 67, 1, 1906);
-    			attr_dev(span4, "class", "control svelte-1dj3t5i");
-    			add_location(span4, file$8, 68, 1, 1977);
-    			attr_dev(span5, "class", "control svelte-1dj3t5i");
-    			add_location(span5, file$8, 69, 1, 2052);
-    			attr_dev(span6, "class", "control svelte-1dj3t5i");
-    			add_location(span6, file$8, 70, 1, 2124);
-    			attr_dev(span7, "class", "control svelte-1dj3t5i");
-    			add_location(span7, file$8, 71, 1, 2197);
-    			attr_dev(span8, "class", "control svelte-1dj3t5i");
-    			add_location(span8, file$8, 72, 1, 2270);
-    			attr_dev(span9, "class", "control svelte-1dj3t5i");
-    			add_location(span9, file$8, 73, 1, 2347);
-    			attr_dev(span10, "class", "control svelte-1dj3t5i");
-    			add_location(span10, file$8, 74, 1, 2479);
-    			attr_dev(span11, "class", "control svelte-1dj3t5i");
-    			add_location(span11, file$8, 75, 1, 2633);
+    			attr_dev(span0, "class", "control svelte-wssk20");
+    			add_location(span0, file$8, 66, 1, 1676);
+    			attr_dev(span1, "class", "control svelte-wssk20");
+    			add_location(span1, file$8, 67, 1, 1754);
+    			attr_dev(span2, "class", "control svelte-wssk20");
+    			add_location(span2, file$8, 68, 1, 1835);
+    			attr_dev(span3, "class", "control svelte-wssk20");
+    			add_location(span3, file$8, 69, 1, 1908);
+    			attr_dev(span4, "class", "control svelte-wssk20");
+    			add_location(span4, file$8, 70, 1, 1979);
+    			attr_dev(span5, "class", "control svelte-wssk20");
+    			add_location(span5, file$8, 71, 1, 2054);
+    			attr_dev(span6, "class", "control svelte-wssk20");
+    			add_location(span6, file$8, 72, 1, 2126);
+    			attr_dev(span7, "class", "control svelte-wssk20");
+    			add_location(span7, file$8, 73, 1, 2199);
+    			attr_dev(span8, "class", "control svelte-wssk20");
+    			add_location(span8, file$8, 74, 1, 2272);
+    			attr_dev(span9, "class", "control svelte-wssk20");
+    			add_location(span9, file$8, 75, 1, 2349);
+    			attr_dev(span10, "class", "control svelte-wssk20");
+    			add_location(span10, file$8, 76, 1, 2481);
+    			attr_dev(span11, "class", "control svelte-wssk20");
+    			add_location(span11, file$8, 77, 1, 2635);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span0, anchor);
@@ -7766,7 +7766,7 @@ var app = (function () {
     		block,
     		id: create_if_block$5.name,
     		type: "if",
-    		source: "(64:0) {#if menuWidth==\\\"100%\\\"}",
+    		source: "(66:0) {#if menuWidth==\\\"100%\\\"}",
     		ctx
     	});
 
@@ -7788,7 +7788,7 @@ var app = (function () {
     	return block;
     }
 
-    // (80:0) {:then go}
+    // (82:0) {:then go}
     function create_then_block$1(ctx) {
     	const block = { c: noop, m: noop, d: noop };
 
@@ -7796,14 +7796,14 @@ var app = (function () {
     		block,
     		id: create_then_block$1.name,
     		type: "then",
-    		source: "(80:0) {:then go}",
+    		source: "(82:0) {:then go}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (79:24)  {:then go}
+    // (81:24)  {:then go}
     function create_pending_block$1(ctx) {
     	const block = { c: noop, m: noop, d: noop };
 
@@ -7811,7 +7811,7 @@ var app = (function () {
     		block,
     		id: create_pending_block$1.name,
     		type: "pending",
-    		source: "(79:24)  {:then go}",
+    		source: "(81:24)  {:then go}",
     		ctx
     	});
 
@@ -7878,11 +7878,11 @@ var app = (function () {
     			t1 = space();
     			await_block_anchor = empty();
     			info.block.c();
-    			attr_dev(section, "class", "svelte-1dj3t5i");
-    			add_location(section, file$8, 59, 0, 1377);
-    			attr_dev(div, "class", "back svelte-1dj3t5i");
+    			attr_dev(section, "class", "svelte-wssk20");
+    			add_location(section, file$8, 60, 0, 1378);
+    			attr_dev(div, "class", "back svelte-wssk20");
     			set_style(div, "width", /*menuWidth*/ ctx[3]);
-    			add_location(div, file$8, 62, 0, 1467);
+    			add_location(div, file$8, 64, 0, 1469);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

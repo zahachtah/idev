@@ -158,7 +158,7 @@ function addRemove(event,id){console.log(event.offsetY/event.currentTarget.getBo
 		background-color: white /* rgba(100, 100, 100, 0.05);*/ 
 	}
 	div {
-		width: 95%;
+		width: 100%;
 		padding: 0.2em;
 		border: 0px solid blue;
 		margin: 0.15em 0;

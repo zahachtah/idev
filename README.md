@@ -26,3 +26,8 @@
 
 
 coming from github or from couchdb server :: window.location.href
+
+
+
+Figure out how to remove livereload from the production build, in the rollup-script probably....
+!production && livereload('public'),
