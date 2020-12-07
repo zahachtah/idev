@@ -1,0 +1,13 @@
+{
+  "name": "InfoDev",
+  "short_name": "InfoDev",
+  "lang": "en-US",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "https://zahachtah.github.io/Content",
+  "scope": "https://zahachtah.github.io/Content",
+  "permissions": [ 
+    "unlimitedStorage",
+    "fullscreen"
+   ]
+}
