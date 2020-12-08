@@ -148,6 +148,16 @@
         /* this will allow the dragged element to scroll the list */
 		overflow-y: auto ;
 		height: auto;
-		background-color: white /* rgba(100, 100, 100, 0.05);*/ 
+		background-color: white; /* rgba(100, 100, 100, 0.05);*/ 
+		padding-bottom: 40px 
 	}
+	:global(body)::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+:global(body) {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 </style>
