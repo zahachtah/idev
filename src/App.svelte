@@ -6,7 +6,10 @@
 	let opt={'depth':1,
 			 'base':'root',
 			 url:'https://9231c9c3-121c-4b8e-bbfd-ac275ec62eb9-bluemix.cloudantnosqldb.appdomain.cloud/test/',
-			 'edit':false, 
+			 'edit':false,
+			 'remove':false,
+			 'addParagraph':false, 
+			 'addSection':false,
 			 'history':[], 
 			 'dragDisabled':true,
 			 'user':"apikey-81f76e82d4154627812593832eb9c4cb",
@@ -18,6 +21,8 @@
 	}
 
 	const newNodes="957fd8f002d38bd256c615b4c84cd5fc"
+
+
 	
 	async function getID(id){
 	if (!nodes[id]){
@@ -38,7 +43,7 @@
 	}
 	function check(){
 		const elapsed=Date.now()-start
-		if (elapsed<500)
+		if (elapsed<350)
 			{	if (opt.history.length>0){
 		opt.base=opt.history[opt.history.length-1];
 		opt.history.pop()
@@ -52,9 +57,9 @@
 			}
 	}
 
-	function toggle(x){x=!x}
 	
-	$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
+	
+	//$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
 <svelte:window on:keydown="{_handleKeydown}" on:keyup="{() => key = false}"/>
 
@@ -66,13 +71,14 @@
 {#if menuWidth=="100%"}
 	<span  class="control" ><Svg name="Connection" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Authorization" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Trash" size=30 fill="black"/></span>
+	<span  class="control" ><Svg name="Delete" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Cut" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Section" size=30 fill="black"/></span>
+	<span  class="control" on:click={()=>{opt.remove=!opt.remove}}><Svg name="Remove" size=30 fill={(opt.remove)?"crimson":"black"}/></span>
+	<span  class="control" on:click={()=>{opt.addSection=!opt.addSection}} ><Svg name="Section" size=30 fill={(opt.addSection)?"olive":"black"}/></span>
 	<span  class="control" ><Svg name="Code" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Video" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Paragraph" size=30 fill="black"/></span>
+	<span  class="control" on:click={()=>{opt.addParagraph=!opt.addParagraph}}><Svg name="Paragraph" size=30 fill={(opt.addParagraph)?"olive":"black"}/></span>
 	<span  class="control" on:click={()=>{opt.edit=!opt.edit}}><Svg name="Editor" size=30 fill={(opt.edit)?"olive":"crimson"}/></span>
 	<span  class="control" on:click={()=>{opt.dragDisabled=!opt.dragDisabled}}><Svg name="Move" size=30 fill={(opt.dragDisabled)?"crimson":"olive"}/></span>
 	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
