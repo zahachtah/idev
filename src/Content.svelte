@@ -45,7 +45,7 @@ import { check_outros } from 'svelte/internal';
 	}
 	
 	function handleDndFinalize(e) {
-		
+		console.log(e)
 		nodes[id].links = e.detail.items;
 		post(id)
 		console.log('update node with links')
@@ -158,6 +158,9 @@ function newNode(type){
 		if (type=='Section')
 		{
 			base.links=[]
+			base.type="Section"
+			base.content.title="New Section"
+			delete base.content.text
 			return base
 		}
 
@@ -169,6 +172,7 @@ function addRemove(event,i,id,parent){
 	console.log(i)
 	console.log(id);
 	console.log(parent);
+	console.log(nodes[id].links)
 	if (opt.addParagraph){
 		const thisID=uuid()
 		nodes[thisID]=newNode('Paragraph')
@@ -189,6 +193,11 @@ function addRemove(event,i,id,parent){
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.addSection=false
 	}
+	else if (opt.remove){
+		nodes[parent].links.splice(i,1)
+		post(parent) //NOTE: try to make  bulk-post!
+		opt.remove=false
+	}
 	
 }
 
@@ -200,17 +209,15 @@ function addRemove(event,i,id,parent){
 
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view}/>
 
-	{#if nodes[id].links}
+	{#if (nodes[id].links && depth<=opt.depth)}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
 					on:finalize={handleDndFinalize}>
-			{#if depth<=opt.depth}
 				{#each nodes[id].links as link,i (link.id)}
 						<div animate:flip="{{duration: flipDurationMs}}" class="item" on:click={(event)=>addRemove(event,i,link.id,id)}>
 							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1} view={link.view}/>
 						</div>
 				{/each}
-			{/if}
 		</section>
 	{/if}
 {:catch error}
