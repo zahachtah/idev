@@ -21,6 +21,7 @@ import { check_outros } from 'svelte/internal';
 	export let depth
 	export let width
 	export let view
+	let addDepth=0
 	let key
 
 	let exempt=["Header"]
@@ -206,10 +207,9 @@ function addRemove(event,i,id,parent){
 	loading
 	
 {:then go}
-
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view}/>
 
-	{#if (nodes[id].links && depth<=opt.depth)}
+	{#if (nodes[id].links && depth-addDepth<=opt.depth)}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
 					on:finalize={handleDndFinalize}>
@@ -234,7 +234,8 @@ function addRemove(event,i,id,parent){
         /* this will allow the dragged element to scroll the list */
 		overflow-y: auto ;
 		height: auto;
-		background-color: white /* rgba(100, 100, 100, 0.05);*/ 
+		background-color: white; /* rgba(100, 100, 100, 0.05);*/ 
+
 	}
 	div {
 		width: 100%;
@@ -245,4 +246,5 @@ function addRemove(event,i,id,parent){
 	.item {
 		background-color: white /*rgba(00, 100, 100, 0.05);*/
 	}
+
 </style>
