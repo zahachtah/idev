@@ -202,6 +202,8 @@ function addRemove(event,i,id,parent){
 	
 }
 
+$: if (view) {if (view.addDepth){addDepth=view.addDepth}}
+
 </script>
 {#await get(id)}
 	loading
@@ -215,7 +217,7 @@ function addRemove(event,i,id,parent){
 					on:finalize={handleDndFinalize}>
 				{#each nodes[id].links as link,i (link.id)}
 						<div animate:flip="{{duration: flipDurationMs}}" class="item" on:click={(event)=>addRemove(event,i,link.id,id)}>
-							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1} view={link.view}/>
+							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1-addDepth} view={link}/>
 						</div>
 				{/each}
 		</section>
