@@ -59,6 +59,7 @@ import { check_outros } from 'svelte/internal';
 	
 async function post(id) {
 	try {
+		nodes[id].updated= new Date()
 		const options={
 			method: 'put',
 			headers: {
@@ -68,6 +69,7 @@ async function post(id) {
 			},
 			body: JSON.stringify(nodes[id])
 		}
+
 		const response=await fetch(opt.url+id, options)
 		const data= await response.json()
 		nodes[id]._rev=data.rev
