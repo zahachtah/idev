@@ -47,14 +47,14 @@ function debounce() {
       {#if opt.edit}
       <h1  on:click={()=>{opt.history.push(opt.base); opt.base=id}} on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}/>
     {:else}
-      <h1  on:click={()=>{opt.history.push(opt.base); opt.base=id}}>{@html nodes[id].content.title}</h1>
+      <h1  on:click={()=>{opt.history.push(opt.base); opt.base=id}}>{@html nodes[id].content.title} ({depth})[{opt.history.length}]</h1>
     {/if}
   </section>
   {:else}
   {#if opt.edit}
   <h2  on:click={()=>{opt.history.push(opt.base); opt.base=id}}  on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}></h2>
 {:else}
-  <h2  on:click={()=>{opt.history.push(opt.base); opt.base=id}}  on:keyup={()=>debounce()} contenteditable=false  bind:innerHTML={nodes[id].content.title}></h2>
+  <h2  on:click={()=>{opt.history.push(opt.base); opt.base=id}}  on:keyup={()=>debounce()} >{@html nodes[id].content.title} ({depth})[{opt.history.length}]</h2>
 {/if}
     
   {/if}

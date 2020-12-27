@@ -10,6 +10,8 @@
 			 'remove':false,
 			 'addParagraph':false, 
 			 'addSection':false,
+			 'addImage':false,
+			 'showContextInfer':false,
 			 'history':[], 
 			 'dragDisabled':true,
 			 'user':"apikey-81f76e82d4154627812593832eb9c4cb",
@@ -77,11 +79,12 @@
 	<span  class="control" on:click={()=>{opt.addSection=!opt.addSection}} ><Svg name="Section" size=30 fill={(opt.addSection)?"olive":"black"}/></span>
 	<span  class="control" ><Svg name="Code" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Video" size=30 fill="black"/></span>
-	<span  class="control" ><Svg name="Image" size=30 fill="black"/></span>
+	<span  class="control" on:click={()=>{opt.addImage=!opt.addImage}}><Svg name="Image" size=30 fill={(opt.addImage)?"olive":"crimson"}/></span>
 	<span  class="control" on:click={()=>{opt.addParagraph=!opt.addParagraph}}><Svg name="Paragraph" size=30 fill={(opt.addParagraph)?"olive":"black"}/></span>
 	<span  class="control" on:click={()=>{opt.edit=!opt.edit}}><Svg name="Editor" size=30 fill={(opt.edit)?"olive":"crimson"}/></span>
 	<span  class="control" on:click={()=>{opt.dragDisabled=!opt.dragDisabled}}><Svg name="Move" size=30 fill={(opt.dragDisabled)?"crimson":"olive"}/></span>
 	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
+	<span  class="control" on:click={()=>{opt.showContextInfer=!opt.showContextInfer}}><Svg name="Connection" size=30 fill={(opt.showContextInfer)?"olive":"black"}/></span>
 {/if}
 </div>
 {#await getID(newNodes)}

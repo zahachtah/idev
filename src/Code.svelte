@@ -13,7 +13,7 @@
 		export let depth
 		export let view
 </script>
-<div contentedit=true>
+<div contenteditable=true>
 	
 
 <Prism language="html" >

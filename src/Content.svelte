@@ -79,6 +79,12 @@ async function post(id) {
 	catch (err) {console.log(err)}
 }
 
+function docUpdates(doc){
+	if (doc.content.context==""){doc.content.context="context"}
+	if (doc.content.infer==""){doc.content.infer="infer"}
+	return doc
+}
+
 async function get(id){
 	
 	try {
@@ -95,7 +101,7 @@ async function get(id){
 				const data= await response.json()
 				const add=[]
 				data.rows.forEach(el => {
-					nodes[el.id]=el.doc; 
+					nodes[el.id]=docUpdates(el.doc); 
 					if (nodes[el.id].hasOwnProperty('links'))
 						{if (nodes[el.id].links.length>0)	
 							{nodes[el.id].links.forEach(link=>add.push(link))}; };
@@ -112,7 +118,8 @@ async function get(id){
 				const response=await fetch(opt.url+id)
 				//console.log(response)
 				const data= await response.json()
-				nodes[id]=data;
+
+				nodes[id]=docUpdates(data);
 				
 				if (data.hasOwnProperty('links')) {await get(data.links)}
 				return nodes[id]
@@ -166,6 +173,12 @@ function newNode(type){
 			delete base.content.text
 			return base
 		}
+		if (type=='Image')
+		{
+			base.content.src="url"
+			base.type="Image"
+			return base
+		}		
 
 	}
 
@@ -192,9 +205,19 @@ function addRemove(event,i,id,parent){
 		console.log(nodes[thisID])
 		post(thisID)
 		// Note make it dependent on where one clicks!!
-		nodes[parent].links.splice(i+1,0,{id:thisID,view:'inline'})
+		nodes[parent].links.splice(i+1,0,{id:thisID,view:'inline',addDepth:1})
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.addSection=false
+	}
+	else if (opt.addImage){
+		const thisID=uuid()
+		nodes[thisID]=newNode('Image')
+		console.log(nodes[thisID])
+		post(thisID)
+		// Note make it dependent on where one clicks!!
+		nodes[parent].links.splice(i+1,0,{id:thisID,view:'inline',addDepth:1})
+		post(parent) //NOTE: try to make  bulk-post!
+		opt.addImage=false
 	}
 	else if (opt.remove){
 		nodes[parent].links.splice(i,1)
@@ -204,15 +227,29 @@ function addRemove(event,i,id,parent){
 	
 }
 
+let timer;
+
+function debounce() {
+    console.log('start debounce');
+		clearTimeout(timer);
+		timer = setTimeout(() => {post(id);}, 1500);
+  }
+
 $: if (view) {if (view.addDepth){addDepth=view.addDepth}}
+
 
 </script>
 {#await get(id)}
 	loading
 	
 {:then go}
+	{#if opt.showContextInfer}
+		context: <span style="color:olive" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.context}></span><br>  
+	{/if}
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view}/>
-
+	{#if opt.showContextInfer}
+		<br>infer: <span style="color:orange" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.infer}> </span>  
+	{/if}
 	{#if (nodes[id].links && depth-addDepth<=opt.depth)}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
@@ -235,6 +272,7 @@ $: if (view) {if (view.addDepth){addDepth=view.addDepth}}
 		min-height: 40px;
 		border: 0px solid black;
 		padding: 0;
+		margin: 0;
         /* this will allow the dragged element to scroll the list */
 		overflow-y: auto ;
 		height: auto;
