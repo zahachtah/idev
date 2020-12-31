@@ -14,14 +14,15 @@
 	import Svega from './Svega.svelte'
 	import Data from './Data.svelte'
 	import CouchDB from './CouchDB.svelte'
+	import Disqus from './Disqus.svelte'
 import { check_outros } from 'svelte/internal';
 	export let nodes
 	export let opt
 	export let id
 	export let depth
 	export let width
-	export let view
-	let addDepth=0
+	export let view={}
+	export let addDepth=0
 	let key
 
 	let exempt=["Header"]
@@ -186,8 +187,8 @@ function addRemove(event,i,id,parent){
 	const y=event.offsetY/event.currentTarget.getBoundingClientRect().height
 	console.log(y);
 	console.log(i)
-	console.log(id);
-	console.log(parent);
+	console.log('node'+id);
+	console.log('parent:'+parent);
 	console.log(nodes[id].links)
 	if (opt.addParagraph){
 		const thisID=uuid()
@@ -215,7 +216,7 @@ function addRemove(event,i,id,parent){
 		console.log(nodes[thisID])
 		post(thisID)
 		// Note make it dependent on where one clicks!!
-		nodes[parent].links.splice(i+1,0,{id:thisID,view:'inline',addDepth:1})
+		nodes[parent].links.splice(i+1,0,{id:thisID,view:'inline'})
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.addImage=false
 	}
@@ -235,9 +236,9 @@ function debounce() {
 		timer = setTimeout(() => {post(id);}, 1500);
   }
 
-$: if (view) {if (view.addDepth){addDepth=view.addDepth}}
+//$: if (view) {if (view.addDepth){addDepth=view.addDepth}}
 
-
+//$: {console.log(addDepth)}
 </script>
 {#await get(id)}
 	loading
@@ -246,20 +247,25 @@ $: if (view) {if (view.addDepth){addDepth=view.addDepth}}
 	{#if opt.showContextInfer}
 		context: <span style="color:olive" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.context}></span><br>  
 	{/if}
-	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view}/>
+	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view} bind:addDepth={addDepth}/>
 	{#if opt.showContextInfer}
 		<br>infer: <span style="color:orange" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.infer}> </span>  
 	{/if}
-	{#if (nodes[id].links && depth-addDepth<=opt.depth)}
+	{#if (nodes[id].links && depth<=opt.depth+addDepth+(view.hasOwnProperty("addDepth")?view.addDepth:0))}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
 					on:finalize={handleDndFinalize}>
 				{#each nodes[id].links as link,i (link.id)}
 						<div animate:flip="{{duration: flipDurationMs}}" class="item" on:click={(event)=>addRemove(event,i,link.id,id)}>
-							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1-addDepth} view={link}/>
+							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1} addDepth={addDepth} view={link}/>
 						</div>
 				{/each}
 		</section>
+	{/if}
+	{#if depth==1}
+	{#if nodes[id].info.comments}
+		<Disqus id={id} title={nodes[id].content.title}/>
+	{/if}
 	{/if}
 {:catch error}
 	<p style="color: red">{error.message}</p>
@@ -281,9 +287,10 @@ $: if (view) {if (view.addDepth){addDepth=view.addDepth}}
 	}
 	div {
 		width: 100%;
-		padding: 0.2em;
+		padding:0;
+		padding-bottom: 0.3em;
 		border: 0px solid blue;
-		margin: 0.15em 0;
+		margin: 0;
 	}
 	.item {
 		background-color: white /*rgba(00, 100, 100, 0.05);*/

@@ -1,11 +1,13 @@
 <script>
 import Image from './Image.svelte'
+import Svg from './Svg.svelte'
 export let opt
 export let nodes
 export let id
 export let width
 export let depth
 export let view
+export let addDepth
 let backgroundImageID
 
 if (nodes[id].links.length>0){
@@ -39,22 +41,36 @@ function debounce() {
 		clearTimeout(timer);
 		timer = setTimeout(() => {post(id);}, 1500);
   }
-// https://images.unsplash.com/photo-1607088829306-76f3779160f6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80
+
+function addToHistory(){
+  if (id!=opt.base){ // avoid adding when already base
+  opt.history.push(opt.base); 
+  opt.base=id}
+}
+
 </script>
 {#if nodes[backgroundImageID]}
     <section class="masthead" role="img" aria-label="Image Description" style="background-image:url({nodes[backgroundImageID].content.src})">
       
       {#if opt.edit}
-      <h1  on:click={()=>{opt.history.push(opt.base); opt.base=id}} on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}/>
+      <h1  on:click={()=>addToHistory()} on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}/>
     {:else}
-      <h1  on:click={()=>{opt.history.push(opt.base); opt.base=id}}>{@html nodes[id].content.title} ({depth})[{opt.history.length}]</h1>
+      <h1  on:click={()=>addToHistory()}>{@html nodes[id].content.title} </h1>
     {/if}
   </section>
   {:else}
   {#if opt.edit}
-  <h2  on:click={()=>{opt.history.push(opt.base); opt.base=id}}  on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}></h2>
+  
+  <div class="section" style="padding-bottom:{Math.max(0.0,0.9-(depth-2)*0.6)}em; padding-top:{Math.max(0.0,1.5-(depth-2))}em ">
+    <h2  on:click={()=>addToHistory()}  on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title} style="font-size:{1.0+0.5/(depth-1)}em" /> 
+    <span  on:click|stopPropagation={()=>{ addDepth++}}>
+      <Svg name="Circle" size="1.2em" fill="#ddd"/>
+    </span>
+  </div>
 {:else}
-  <h2  on:click={()=>{opt.history.push(opt.base); opt.base=id}}  on:keyup={()=>debounce()} >{@html nodes[id].content.title} ({depth})[{opt.history.length}]</h2>
+<!-- REMEMBER TO MAKE ADDDEPTH TOGGLE INSTEAD!-->
+<div class="section" style="padding-bottom:{Math.max(0.0,1.5-(depth-2)*1.3)}em; padding-top:{Math.max(0.0,1.5-(depth-2))}em ">
+<h2  on:click={()=>addToHistory()}  on:keyup={()=>debounce()} style="font-size:{1.0+0.5/(depth-1)}em; color:{(depth<=2)?"black":"gray"}">{@html nodes[id].content.title}</h2><span  on:click|stopPropagation={()=>{ addDepth++}}><Svg name="Circle" size="1.2em" fill="#ddd"/> ({depth})</span></div>
 {/if}
     
   {/if}
@@ -84,4 +100,13 @@ h1 {
   line-height: 1;
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
   margin-bottom: -90px;/* 40 to be in middle */
-}</style>
+}
+
+h2 {
+  display: inline
+}
+.section{
+  margin:0;
+  padding:0;
+}
+</style>
