@@ -244,13 +244,17 @@ function debounce() {
 	loading
 	
 {:then go}
-	{#if opt.showContextInfer}
-		context: <span style="color:olive" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.context}></span><br>  
+	{#if opt.showContextInfer>0}
+	<!-- MAKE A RND NOTE EDIT FUNCTION, SORTED BY DATE??-->
+		<div>context: <span style="color:olive" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.context}></span></div>
 	{/if}
+	{#if opt.showContextInfer<2}
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view} bind:addDepth={addDepth}/>
-	{#if opt.showContextInfer}
-		<br>infer: <span style="color:orange" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.infer}> </span>  
 	{/if}
+	{#if opt.showContextInfer>0}
+		<div style="margin-bottom:0.3em">infer: <span style="color:orange" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.infer}> </span>  </div>
+	{/if}
+
 	{#if (nodes[id].links && depth<=opt.depth+addDepth+(view.hasOwnProperty("addDepth")?view.addDepth:0))}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 

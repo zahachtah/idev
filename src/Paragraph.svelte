@@ -37,9 +37,9 @@
 </script>
 
 {#if opt.edit}
-  <span on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.text}></span>
+  <div on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.text}></div>
 {:else}
-  <span on:keyup={()=>debounce()} contenteditable=false  bind:innerHTML={nodes[id].content.text}></span>  
+  <div on:keyup={()=>debounce()} contenteditable=false  bind:innerHTML={nodes[id].content.text}></div>  
 {/if}
 <!--
   {#if view.mode=='structure'}
@@ -49,6 +49,13 @@
   {/if}
 -->
 <style>
-
+div {
+  margin:0;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font-size: 18px;
+  line-height: 1.44444;
+  font-family: Georgia,Times New Roman,Times,serif; 
+}
 </style>
 
