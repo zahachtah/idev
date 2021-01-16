@@ -4,7 +4,8 @@
 		export let opt
 		export let width
 		export let depth
-		export let view
+        export let view
+        export let addDepth
 $: opt
 $: width
 </script>

@@ -187,8 +187,8 @@ function addRemove(event,i,id,parent){
 	const y=event.offsetY/event.currentTarget.getBoundingClientRect().height
 	console.log(y);
 	console.log(i)
-	console.log('node'+id);
-	console.log('parent:'+parent);
+	console.log('node: '+id);
+	console.log('parent: '+parent);
 	console.log(nodes[id].links)
 	if (opt.addParagraph){
 		const thisID=uuid()

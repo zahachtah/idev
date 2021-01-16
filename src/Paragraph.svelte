@@ -5,6 +5,7 @@
   export let id
   export let depth
   export let view
+  export let addDepth
 
   async function post(id) {
     try {
@@ -41,13 +42,6 @@
 {:else}
   <div on:keyup={()=>debounce()} contenteditable=false  bind:innerHTML={nodes[id].content.text}></div>  
 {/if}
-<!--
-  {#if view.mode=='structure'}
-    <span contenteditable={view.edit} style="color:salmon">{@html node.content.text.substring(0, 40)}</span>
-  {:else}
-    <span contenteditable={view.edit}>{@html node.content.text}</span>
-  {/if}
--->
 <style>
 div {
   margin:0;

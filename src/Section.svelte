@@ -55,7 +55,7 @@ function addToHistory(){
       {#if opt.edit}
       <h1  on:click={()=>addToHistory()} on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}/>
     {:else}
-      <h1  on:click={()=>addToHistory()}>{@html nodes[id].content.title} </h1>
+      <h1  on:click={()=>addToHistory()} style="color:{view.view=="thumb" ? "lightgray" : "white"};">{@html nodes[id].content.title} </h1>
     {/if}
   </section>
   {:else}
@@ -70,7 +70,7 @@ function addToHistory(){
 {:else}
 <!-- REMEMBER TO MAKE ADDDEPTH TOGGLE INSTEAD!-->
 <div class="section" style="padding-bottom:{Math.max(0.0,1.5-(depth-2)*1.3)}em; padding-top:{Math.max(0.0,1.5-(depth-2))}em ">
-<h2  on:click={()=>addToHistory()}  on:keyup={()=>debounce()} style="font-size:{1.0+0.5/(depth-1)}em; color:{(depth<=2)?"black":"gray"}">{@html nodes[id].content.title}</h2><span  on:click|stopPropagation={()=>{ addDepth++}}><Svg name="Circle" size="1.2em" fill="#ddd"/> ({depth})</span></div>
+<h2  on:click={()=>addToHistory()}  on:keyup={()=>debounce()} style="font-size:{1.0+0.5/(depth-1)}em; color:{(depth<=2)?"black":"gray"}">{@html nodes[id].content.title}</h2><span  on:click|stopPropagation={()=>{ addDepth++}}><Svg name="Circle" size="1.2em" fill="#ddd"/> </span></div>
 {/if}
     
   {/if}

@@ -5,6 +5,7 @@ export let width
 export let depth
 export let id
 export let view
+export let addDepth
 </script>
 
 {#if view.view!="header"}
