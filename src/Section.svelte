@@ -45,7 +45,9 @@ function debounce() {
 function addToHistory(){
   if (id!=opt.base && (view.view!="thumb" || opt.edit)){ // avoid adding when already base
   opt.history.push(opt.base); 
-  opt.base=id}
+  opt.base=id;
+  window.scrollTo(0, 0);
+}
 }
 
 </script>
