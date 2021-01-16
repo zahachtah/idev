@@ -9,11 +9,13 @@ changed:
 no user/passwd
 newNodes=100ae244c5494db595a9fbfa6ae7fe3f
 remove controls
+
+edit rollup config to remove livereload
 */
 
 	let nodes={}
 	let opt={'depth':1,
-			 'base':'root',
+			 'base':'100ae244c5494db595a9fbfa6ae7fe3f',
 			 url:'https://9231c9c3-121c-4b8e-bbfd-ac275ec62eb9-bluemix.cloudantnosqldb.appdomain.cloud/test/',
 			 'edit':false,
 			 'remove':false,
@@ -73,6 +75,7 @@ remove controls
 	
 	//$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
+
 <svelte:window on:keydown="{_handleKeydown}" on:keyup="{() => key = false}"/>
 
 <section>
@@ -98,9 +101,7 @@ remove controls
 {/if}
 -->
 </div>
-{#await getID(newNodes)}
-{:then go}
-{/await}
+
 
 
 <style>
