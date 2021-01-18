@@ -220,7 +220,13 @@ function addRemove(event,i,id,parent){
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.addImage=false
 	}
+	else if (opt.paste){
+		nodes[parent].links.splice(i+1,0,{id:opt.copied,view:'inline'})
+		post(parent) //NOTE: try to make  bulk-post!
+		opt.paste=false
+	}
 	else if (opt.remove){
+		opt.copied=id
 		nodes[parent].links.splice(i,1)
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.remove=false
@@ -248,7 +254,7 @@ function debounce() {
 	<!-- MAKE A RND NOTE EDIT FUNCTION, SORTED BY DATE??-->
 		<div>context: <span style="color:olive" on:keyup={()=>debounce()} contenteditable=true  bind:innerHTML={nodes[id].content.context}></span></div>
 	{/if}
-	{#if opt.showContextInfer<2}
+	{#if opt.showContextInfer<2 || nodes[id].type=="Section"}
 	<svelte:component this={comp[nodes[id].type]} bind:nodes={nodes} bind:opt={opt} id={id} width={width} depth={depth} view={view} bind:addDepth={addDepth}/>
 	{/if}
 	{#if opt.showContextInfer>0}
@@ -258,7 +264,9 @@ function debounce() {
 	{#if (nodes[id].links && depth<=opt.depth+addDepth+(view.hasOwnProperty("addDepth")?view.addDepth:0))}
 		<section use:dndzone={{items:nodes[id].links, flipDurationMs,type:'dnd',dragDisabled:opt.dragDisabled}}
 					on:consider={handleDndConsider} 
-					on:finalize={handleDndFinalize}>
+					on:finalize={handleDndFinalize}
+					class:empty="{nodes[id].links.length < 1}"
+					>
 				{#each nodes[id].links as link,i (link.id)}
 						<div animate:flip="{{duration: flipDurationMs}}" class="item" on:click={(event)=>addRemove(event,i,link.id,id)}>
 							<svelte:self bind:nodes={nodes} bind:opt={opt} id={link.id} width={width} depth={depth+1} addDepth={addDepth} view={link}/>
@@ -279,7 +287,7 @@ function debounce() {
 	section {
 		width: auto;
 		max-width: 800px;
-		min-height: 40px;
+		
 		border: 0px solid black;
 		padding: 0;
 		margin: 0;
@@ -298,6 +306,10 @@ function debounce() {
 	}
 	.item {
 		background-color: white /*rgba(00, 100, 100, 0.05);*/
+	}
+	.empty {
+		min-height: 100px;
+		background-color:lightgray
 	}
 
 </style>

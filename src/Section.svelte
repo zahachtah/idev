@@ -57,7 +57,7 @@ function addToHistory(){
       {#if opt.edit}
       <h1  on:click={()=>addToHistory()} on:keyup={()=>debounce()} contenteditable=true bind:innerHTML={nodes[id].content.title}/>
     {:else}
-      <h1  on:click={()=>addToHistory()} style="color:{view.view=="thumb" ? "lightgray" : "white"};">{@html nodes[id].content.title} </h1>
+      <h1  on:click={()=>addToHistory()} style="color:{view.view=="thumb" ? "lightgray" : "white"};">{@html nodes[id].content.title} </h1> 
     {/if}
   </section>
   {:else}
@@ -109,6 +109,7 @@ h2 {
 }
 .section{
   margin:0;
+  margin-bottom: 1.4em;
   padding:0;
 }
 </style>

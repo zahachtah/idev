@@ -1,10 +1,21 @@
 <script>
 	import Content from './Content.svelte'
 	import { dndzone } from 'svelte-dnd-action';
-	import Svg from './Svg.svelte'
+    import Svg from './Svg.svelte'
+    
+/*
+changed:
+
+no user/passwd
+newNodes=100ae244c5494db595a9fbfa6ae7fe3f
+remove controls
+
+edit rollup config to remove livereload
+*/
+
 	let nodes={}
 	let opt={'depth':1,
-			 'base':'root',
+			 'base':'100ae244c5494db595a9fbfa6ae7fe3f',
 			 url:'https://9231c9c3-121c-4b8e-bbfd-ac275ec62eb9-bluemix.cloudantnosqldb.appdomain.cloud/test/',
 			 'edit':false,
 			 'remove':false,
@@ -13,16 +24,14 @@
 			 'addImage':false,
 			 'showContextInfer':0,
 			 'history':[], 
-			 'dragDisabled':true,
-			 'user':"apikey-81f76e82d4154627812593832eb9c4cb",
-			 'pwd':"8918d591770b9449c2012979b0f9101b5416e1c6"}
+			 'dragDisabled':true}
 	let key=false
 	
 	function _handleKeydown(event) {
 		key = event.which;
 	}
 
-	const newNodes="957fd8f002d38bd256c615b4c84cd5fc"
+	const newNodes="100ae244c5494db595a9fbfa6ae7fe3f"
 
 
 	
@@ -66,6 +75,7 @@
 	
 	//$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
+
 <svelte:window on:keydown="{_handleKeydown}" on:keyup="{() => key = false}"/>
 
 <section>
@@ -73,7 +83,7 @@
 </section>
 
 <div class="back" style="width: {menuWidth}" on:mousedown|self={()=>startTimer()} on:mouseup|self={()=>check()} on:touchstart|self={()=>startTimer()} on:touchend|self={()=>check()}>
-{#if menuWidth=="100%"}
+<!--{#if menuWidth=="100%"}
 	<span  class="control" ><Svg name="Connection" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Authorization" size=30 fill="black"/></span>
 	<span  class="control" ><Svg name="Delete" size=30 fill="black"/></span>
@@ -89,10 +99,9 @@
 	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
 	<span  class="control" on:click={()=>{toggle('showContextInfer',3)}}><Svg name="Connection" size=30 fill={(opt.showContextInfer!=0)?"olive":"black"}/></span>
 {/if}
+-->
 </div>
-{#await getID(newNodes)}
-{:then go}
-{/await}
+
 
 
 <style>
