@@ -33,11 +33,14 @@ function hack(id){
         DISQUS.reset({
         reload: true,
         config: function () {
-            this.page.identifier = window.location.origin.concat("#!".concat(hack(id)));
-            this.page.url = window.location.origin.concat("#!".concat(hack(id)));
+            this.page.identifier = window.location.origin.concat("#!".concat(id));
+            this.page.url = window.location.origin.concat("#!".concat(id));
             this.page.title = title;
             }
         })
+        console.log(window.location.origin.concat("#!".concat(hack(id))))
+        console.log(title)
+        console.log(id)
 	});
 /*
     setTimeout(() => {
