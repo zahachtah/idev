@@ -11,6 +11,7 @@
 			 'addParagraph':false, 
 			 'addSection':false,
 			 'addImage':false,
+			 'copyNode':false,
 			 'showContextInfer':0,
 			 'copied':'',
 			 'paste':false,
@@ -65,7 +66,7 @@
 		if (n==2) {opt[v]=!opt[v]}
 		else {if (opt[v]+1>=n) {opt[v]=0} else {opt[v]=opt[v]+1}}
 	}
-	
+	console.log(opt)
 	//$: if(key==68) {opt.drag=!opt.drag} else if (key==69) {opt.edit=!opt.edit} // add authorization
 </script>
 <svelte:window on:keydown="{_handleKeydown}" on:keyup="{() => key = false}"/>
@@ -88,6 +89,7 @@
 	<span  class="control" on:click={()=>{opt.addParagraph=!opt.addParagraph}}><Svg name="Paragraph" size=30 fill={(opt.addParagraph)?"olive":"black"}/></span>
 	<span  class="control" on:click={()=>{opt.edit=!opt.edit}}><Svg name="Editor" size=30 fill={(opt.edit)?"olive":"crimson"}/></span>
 	<span  class="control" on:click={()=>{opt.dragDisabled=!opt.dragDisabled}}><Svg name="Move" size=30 fill={(opt.dragDisabled)?"crimson":"olive"}/></span>
+	<span  class="control" on:click={()=>{opt.copyNode=!opt.copyNode}}><Svg name="Circle" size=30 fill={(opt.copyNode)?"olive":"crimson"}/></span>
 	<span  class="control" ><Svg name="Equation" size=30 fill="black"/></span>
 	<span  class="control" on:click={()=>{toggle('showContextInfer',3)}}><Svg name="Connection" size=30 fill={(opt.showContextInfer!=0)?"olive":"black"}/></span>
 {/if}

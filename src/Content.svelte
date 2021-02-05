@@ -231,6 +231,14 @@ function addRemove(event,i,id,parent){
 		post(parent) //NOTE: try to make  bulk-post!
 		opt.remove=false
 	}
+	else if (opt.copyNode){
+		const thisID=uuid()
+		nodes[thisID]=JSON.parse(JSON.stringify(nodes[id]))
+		delete nodes[thisID]._rev
+		nodes[thisID]._id=thisID
+		opt.copied=id
+		opt.copyNode=false
+	}
 	
 }
 
