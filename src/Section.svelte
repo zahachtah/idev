@@ -94,10 +94,10 @@ function addToHistory(){
 }
 
 h1 {
+  font-size: clamp(1.5rem, 8vw - 2rem, 3rem);
   font-style: normal;
   font-weight: bold;
   color: #eee;
-  font-size: min(8vmin,30px);
   letter-spacing: 0.03em;
   line-height: 1;
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
@@ -105,6 +105,7 @@ h1 {
 }
 
 h2 {
+  font-size: clamp(1.5rem, 8vw - 2rem, 3rem);
   display: inline
 }
 .section{

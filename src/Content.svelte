@@ -42,6 +42,20 @@ import { check_outros } from 'svelte/internal';
 
 	const flipDurationMs = 400;
 	
+	// for future routing of id's !!
+	function getLocation() {
+		const hashPosition = window.location.href.indexOf('#/')
+		let location = (hashPosition > -1) ? window.location.href.substr(hashPosition + 1) : '/'
+		// Check if there's a querystring
+		const qsPosition = location.indexOf('?')
+		let querystring = ''
+		if (qsPosition > -1) {
+			querystring = location.substr(qsPosition + 1)
+			location = location.substr(0, qsPosition)
+		}
+		return {location, querystring}
+	}
+
 	function handleDndConsider(e) {
 		nodes[id].links = e.detail.items
 	}
@@ -284,7 +298,7 @@ function debounce() {
 	{/if}
 	{#if depth==1}
 	{#if nodes[id].info.comments}
-		<Disqus id={id} title={nodes[id].content.title}/>
+		
 	{/if}
 	{/if}
 {:catch error}
